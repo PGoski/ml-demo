@@ -1,0 +1,5 @@
+---
+- name: Create user
+  include: user.yml
+  when: (item.zones | intersect(group_names)) | length > 0
+  with_items: '{{ users }}'

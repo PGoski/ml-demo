@@ -1,4 +1,4 @@
 ---
 # Managed by Terraform
 floating_ip: "${floating_ip}"
-ansible_ssh_extra_args: '-o ProxyCommand="ssh -W %h:%p -q {{ floating_ip }}"'
+ansible_ssh_extra_args: '-o ProxyCommand=\"ssh -W %h:%p -q {{ floating_ip }}\"'

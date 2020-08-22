@@ -1,0 +1,14 @@
+---
+- name: 'Create user: {{ item.username }}'
+  user:
+    name: '{{ item.username }}'
+    comment: '{{ item.comment }}'
+    groups: '{{ item.groups }}'
+    append: yes
+    state: present
+
+- name: 'Authorize public key for: {{ item.username }}'
+  authorized_key:
+    key: '{{ item.id_pub }}'
+    user: '{{ item.username }}'
+    state: present

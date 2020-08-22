@@ -1,0 +1,23 @@
+---
+- name: Tune down swappiness
+  sysctl:
+    name: vm.swappiness
+    state: present
+    sysctl_set: yes
+    value: '10'
+
+- name: Passwordless sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: ^%sudo
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s
+
+- name: Deny root ssh
+  lineinfile:
+    line: PermitRootLogin no
+    path: /etc/ssh/sshd_config
+    regexp: ^PermitRootLogin
+    state: present
+  notify: restart_ssh
