@@ -9,7 +9,8 @@ yum install -y \
     net-tools \
     telnet \
     wget \
-    vim
+    vim \
+    jq
 
 # Install Terraform
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
@@ -18,14 +19,6 @@ terraform -install-autocomplete
 
 # Install Ansible
 yum install -y ansible
-
-# Install and enable LibVirt
-# yum install @virt
-# dnf -y install virt-top libguestfs-tools
-dnf module install -y virt
-dnf install -y virt-install virt-viewer libguestfs-tools
-systemctl enable libvirtd.service
-systemctl start libvirtd.service
 
 # Clean cache
 yum clean all
