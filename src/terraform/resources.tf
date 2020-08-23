@@ -50,6 +50,7 @@ resource "digitalocean_droplet" "swarm_worker" {
   */
 }
 
+
 resource "digitalocean_volume" "cassandra_data" {
   region                  = "fra1"
   count                   = var.swarm_workers_count
@@ -74,17 +75,8 @@ resource "digitalocean_droplet" "swarm_gw" {
   private_networking = true
   vpc_uuid = digitalocean_vpc.example.id
   ssh_keys = [digitalocean_ssh_key.default.fingerprint]
-
-  /*
-  connection {
-    user        = "root"
-    type        = "ssh"
-    host = self.ipv4_address
-    private_key = file(var.private_ssh_key_location)
-    timeout = "2m"
-  }
-  */
 }
+
 
 resource "digitalocean_floating_ip" "swarm_gw" {
   droplet_id = digitalocean_droplet.swarm_gw[0].id
@@ -123,8 +115,8 @@ resource "null_resource" "define_ansible_inventory" {
 
 
 
-data "template_file" "gatewayed" {
-  template = file("${path.module}/templates/gatewayed.tmpl")
+data "template_file" "swarm_cluster_vars" {
+  template = file("${path.module}/templates/swarm_cluster.tmpl")
 
   depends_on = [
     digitalocean_floating_ip.swarm_gw,
@@ -135,13 +127,13 @@ data "template_file" "gatewayed" {
   }
 }
 
-resource "null_resource" "define_ansible_gatewayed" {
+resource "null_resource" "define_ansible_swarm_cluster_vars" {
   triggers = {
-    template_rendered = "${data.template_file.gatewayed.rendered}"
+    template_rendered = "${data.template_file.swarm_cluster_vars.rendered}"
   }
 
   provisioner "local-exec" {
-    command = "echo '${data.template_file.gatewayed.rendered}' > ../ansible/group_vars/gatewayed.yml"
+    command = "echo '${data.template_file.swarm_cluster_vars.rendered}' > ../ansible/group_vars/swarm_cluster.yml"
   }
 }
 

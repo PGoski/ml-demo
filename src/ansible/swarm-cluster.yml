@@ -1,0 +1,8 @@
+---
+- hosts: swarm_cluster
+  become: true
+  roles:
+    - {role: swarm-common, tags: ['swarm-common']}
+    - {role: swarm-init, tags: ['swarm-init'], when: "'swarm_managers' in group_names", run_once: true}
+    - {role: swarm-managers, tags: ['swarm-managers'], when: "'swarm_managers' in group_names"}
+    - {role: swarm-workers, tags: ['swarm-workers'], when: "'swarm_workers' in group_names"}

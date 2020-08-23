@@ -1,0 +1,5 @@
+---
+- hosts: swarm_cluster
+  become: true
+  roles:
+    - {role: swarm-remove, tags: ['swarm-remove']}

@@ -1,0 +1,30 @@
+---
+- name: Check cluster membership
+  shell: docker info --format '{% raw %}{{ .Swarm.LocalNodeState }}{% endraw %}'
+  register: swarm_status
+
+
+#- name: Get info about current manager status
+#  docker_host_info:
+#  register: result
+
+#- debug:
+#    var: swarm_status
+
+#- set_fact:
+#    manager_nodes: []
+#
+#- set_fact:
+#    manager_nodes: '{{ manager_nodes + [ item.Addr ] }}'
+#  with_items: '{{ host_result.host_info.Swarm.RemoteManagers }}'
+#
+#- debug:
+#    var: manager_nodes
+
+- name: Add manager to the cluster
+  docker_swarm:
+    state: join
+    advertise_addr: '{{ ansible_eth1.ipv4.address }}'
+    join_token: '{{ swarm_result.swarm_facts.JoinTokens.Manager }}'
+    remote_addrs: [ '{{ host_result.host_info.Swarm.RemoteManagers[0].Addr }}' ]
+  when: swarm_status != "active"

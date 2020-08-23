@@ -1,0 +1,14 @@
+---
+- name: Install python-pip
+  apt:
+    name: python-pip
+    update_cache: yes
+
+- name: Docker-py
+  pip: 
+    name: docker-py
+
+- name: Allow 2377
+  ufw:
+    rule: allow
+    port: '2377'

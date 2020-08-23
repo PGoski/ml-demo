@@ -1,0 +1,12 @@
+---
+- name: Check cluster membership
+  shell: docker info --format '{% raw %}{{ .Swarm.LocalNodeState }}{% endraw %}'
+  register: swarm_status
+
+- name: Add worker to the cluster
+  docker_swarm:
+    state: join
+    advertise_addr: '{{ ansible_eth1.ipv4.address }}'
+    join_token: '{{ swarm_result.swarm_facts.JoinTokens.Worker }}'
+    remote_addrs: [ '{{ host_result.host_info.Swarm.RemoteManagers[0].Addr }}' ]
+  when: swarm_status != "active"
