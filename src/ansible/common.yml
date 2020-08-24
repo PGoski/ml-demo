@@ -3,4 +3,5 @@
 - hosts: all
   become: true
   roles:
-   - {role: update, tags: ['update']}
+   - {role: update, tags: ['update', 'never']}
+   - {role: common-packages, tags: ['common-packages']}

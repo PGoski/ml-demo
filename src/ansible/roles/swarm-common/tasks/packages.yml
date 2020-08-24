@@ -1,0 +1,4 @@
+---
+- name: Docker-py
+  pip: 
+    name: docker-py

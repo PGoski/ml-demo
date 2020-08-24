@@ -4,36 +4,10 @@ networks:
   cassandra-cluster:
 
 services:
-  cassandra-node1:
+  cassandra-node-1:
     image: bitnami/cassandra:latest
     deploy:
-      mode: global
-      update_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
-        window: 120s
-      placement:
-        constraints:
-          - node.hostname == swarm-worker-0
-    ports:
-      - { published: 7000, target: 7000, mode: host }
-      - { published: 7001, target: 7001, mode: host }
-      - { published: 9042, target: 9042, mode: host }
-      - { published: 7199, target: 7199, mode: host }
-    volumes:
-      - /mnt/cassandra_data_0:/bitnami
-    networks:
-      - cassandra-cluster
-    environment:
-      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
-      - CASSANDRA_BROADCAST_ADDRESS=cassandra-node1
-      - CASSANDRA_SEEDS=cassandra-node1 
-
-  cassandra-node2:
-    image: bitnami/cassandra:latest
-    deploy:
+      endpoint_mode: dnsrr
       mode: global
       update_config:
         order: stop-first
@@ -54,13 +28,15 @@ services:
     networks:
       - cassandra-cluster
     environment:
-      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
-      - CASSANDRA_BROADCAST_ADDRESS=cassandra-node2
-      - CASSANDRA_SEEDS=cassandra-node1 
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_PASSWORD_SEEDER: "yes"
+      CASSANDRA_PASSWORD: mypassword
+      CASSANDRA_SEEDS: cassandra-node-1
 
-  cassandra-node3:
+  cassandra-node-2:
     image: bitnami/cassandra:latest
     deploy:
+      endpoint_mode: dnsrr
       mode: global
       update_config:
         order: stop-first
@@ -81,6 +57,34 @@ services:
     networks:
       - cassandra-cluster
     environment:
-      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
-      - CASSANDRA_BROADCAST_ADDRESS=cassandra-node3
-      - CASSANDRA_SEEDS=cassandra-node1 
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_PASSWORD: mypassword
+      CASSANDRA_SEEDS: cassandra-node-1
+
+  cassandra-node-3:
+    image: bitnami/cassandra:latest
+    deploy:
+      endpoint_mode: dnsrr
+      mode: global
+      update_config:
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - node.hostname == swarm-worker-3
+    ports:
+      - { published: 7000, target: 7000, mode: host }
+      - { published: 7001, target: 7001, mode: host }
+      - { published: 9042, target: 9042, mode: host }
+      - { published: 7199, target: 7199, mode: host }
+    volumes:
+      - /mnt/cassandra_data_3:/bitnami
+    networks:
+      - cassandra-cluster
+    environment:
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_PASSWORD: mypassword
+      CASSANDRA_SEEDS: cassandra-node-1

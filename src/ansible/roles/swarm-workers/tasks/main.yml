@@ -1,4 +1,11 @@
 ---
+- name: Temporary - chmod mount
+  file:
+    path: "{{ item }}"
+    mode: '777'
+  with_fileglob:
+    - "/mnt/cassandra_data*"
+
 - name: Check cluster membership
   shell: docker info --format '{% raw %}{{ .Swarm.LocalNodeState }}{% endraw %}'
   register: swarm_status

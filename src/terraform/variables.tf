@@ -10,6 +10,18 @@ variable "private_ssh_key_location" {
   type = string
 }
 
+variable "swarm_managers_size" {
+  type= string
+}
+
+variable "swarm_workers_size" {
+  type= string
+}
+
+variable "swarm_gw_size" {
+  type= string
+}
+
 variable "swarm_workers_count" {
   type = number
 }

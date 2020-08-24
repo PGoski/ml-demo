@@ -1,38 +1,49 @@
 ---
-# TODO: Make it possible to include differnet groups in different zones
 users:
   - username: manager
     comment: Technical account
     id_pub: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDeEJd5dOiGO1NSRZgz8uj1nligKuS1nB2ljKKB06R9BlAdNkSiEzoI/1UsRg+/AHb+zdvMwL1d5ruMIi50QTaVhP5xfL5F7Ytg1Sg6Ia4UC3Xel4rv0lvkxokli0chpk4uvyuZoyyQy02cdmZ5COODrbK1JyhSyrdr8ZcJkIL79Ua1TGlBCTjUJEfVAxHnvNFlRELm4vt1J+aieOpfPMZAibv8WJ4cOc38RqpOhbo3xsOx2+aKWuH1aQWrdEeiEInRsfC1mJOSm7uid0Yu1Qa+UkmTj1e98h/n/NOI0KdRUOJDN1Osndmc/QqWrpb96nCQUcRnJIOP8BAZ6gJZ8q1ACyBN/IbnRIbKebqa1ui8ScFrBJtXLxojrqyiCmwN1lnoe+bhPl9HDiWZFf2KZL+MnIXE4pH2H4FKNO0Q8cg3YkKHdinbVfdUS48EsXzZDoPPcTR3ma8ZQJ5klXPyvdfl+4nwxRIA3Ot0A2G3yuWhTy3fz3oAwvBhopCpZtaxmlcZ3+8YpzTpLDlTCGnabXBBVhFBwAuNkfMjvR4SS916LOctgblToOsSTkLQGIyuIYQrG1UkwZ+IbOuZLEoaC+33xFlSidF4LltNck+mhJubT7vjjLl7mLOkmjF5h9wWiGMJygXDrpSPkZqo2cirCA2w5T8fEuFuplDSaFSmPFfEGw== manager
     zones: 
-      - swarm_gw
-      - swarm_managers
-      - swarm_workers
-    groups: 
-      - sudo
+      swarm_gw:
+        groups:
+          - sudo
+      swarm_managers:
+        groups:
+          - sudo
+      swarm_workers:
+        groups:
+          - sudo
 
   - username: admin1
     comment: Admin user
     id_pub: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOm6z3M/iR1YIVEFZCLqK35P3LYdTbKwurmGEadeW5IzKDHvhoJBmpSq6FtiPPPq1MpRHYrmoR/QA2+HELcevKPaqQF4M9hZ+fIMQSNcwWYpIozS3qdFxA+X6rWQyDJ7pCFLT5KgCUZ8Nf2eSc0rD62FAgfKmDPZv8o9SWp0y7anMyp4idO0vySwp26k4N81BcvYjbVoLxIjBiKJdMt2z5mgVdaypex3nQlSMaVeDTJltzNHaaTw5zGo531kdjY0EYcRHyQcIjlAgqfiVGg4JTxlBBZroc1SZs1G0n78JXpCW1l2wRCWtI+LZChwskTM+oIIfWyuC4EYcLIXcroBE//Z9x+k41It30F7vVqtq+EVeUFmSAMUeEFoAvhKVStUSNwDGj/N1jrdX9J4l/JnxioBAEGQL3q+06xV5d1Po7PusiIOjLc4Dhou+6S6RPYo57suGPWcOUPXAWw85hrpuKcVNYYMDef2tyLm59PdxM8Cjs5nvQvu1L3BMmHuEUj0fzZziYB6/0Hdu9mtcs+9GGS7TyMqlYiy1xT024e+fbaO6ZHEtNwPpJdXHXYb0fyDFDo2EJu4uR1Bn/j8Nv76fBWAu7Ikda6TpbEwYi1/an0rTUbgMncAEoXKfkyyLrP6uNohtDp5I9t5cPP7NQTjGmBCnY9iRCWaiPtc3nIMTbfQ== admin1
     zones: 
-      - swarm_gw
-      - swarm_managers
-      - swarm_workers
-    groups: 
-      - sudo
+      swarm_gw:
+        groups:
+          - sudo
+      swarm_managers:
+        groups:
+          - sudo
+          - docker
+      swarm_workers:
+        groups:
+          - sudo
+          - docker
     
   - username: user1
     comment: User 1
     id_pub: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDbF1srDw/H+5DyEGmKW4qe3qCekJ4dhKKvgyU7fdo80lt7eqGNO6Ke7CarYbkS8gTRUV54/Vf1Seo/+r92t1p9hqoS5z2EGqAlXFRdAEbWGspgXInL9jGtQMN3Md4EZGIVduqESqqQdPpRLSUaBINc/xpv9ZffN3zCjknHpaO0QbXI6HdzZ8MUcmL7QHahYl3GBuGryLiPPsAdPuoUMFH0uT3SZH5lStlWDBYCTCJd8kvTJI4IWOPadhtkiJAcmJqJIQCzhgbXRzYZxAYA2aUc1x9c6xVS9LFalQMfWRR+ScEyimkfCvPEjp3gRWfj8I+0suxBICkr0lR3M8VgBSyAFLScKMaWpIxUGLviP10MDiyBRsp5tZrsdi5O+48pUhMa3CofocmowA3oTAnLxtgGN3dbKQGUqrZj56gqlqHIoVeoUT5zz4nUcVSYwyBHsYUBuEqM7nE6QO1WfnOQZHIWyuUaTOpBMVNjf2NiprLtnX+el1/F4YoZVCvm5LnpHQc5AUiHIaG7UIbMBMYgwbk6t7fTjg8iTryHTRPLvDaAAHJNPcXmZnyEJFlqZajU6FrylNhECzrfRcddZk4wFLUOShXmXg4n/tFMrcUUJoezealNmvrlaeOJId1iPvyByWbuf6O3PQrukDtjP1P3ZezQayyo9txJaGKmWaMAH2srzQ== user1
-    zones: 
-      - swarm_managers
-    groups: 
-      - docker
+    zones:
+      swarm_gw: 
+      swarm_managers:
+        groups:
+          - docker
 
   - username: user2
     comment: User 2
     id_pub: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCkceIOZuYITqeyMLce24B6L8x5KaYTOgvU97lwIcjgQ0iAskSdxM4jF2ZSchwKRtJ7kFJo85bEhEuvEquYVkAvyZay8hfUuizoZoZ6mlPpdRBURHn1g2Uexn5ZD7oCZ+D0/KwTp23SC8V4Ea1QRt8x5qCpcgsR8+A1u/7hom4ZE5UAC0cWouNAVIYYtPgjDiZwCMLO6Ntrnic2j2r1Bw5gzbpPuCEzhZCEwAT24m/d6ZhJARWqy0mCZB/Muvs8ITeEOJltUDBXR7gIZeWcNkDiaxEnOmautTS1P9JHjB0Nq+de5qMuxFmIvPA2t4g1QDdpDi8PZJMiBDagFMz8TalzwAecQP8eufl4qJMGOFx0NEXhq8cc6DV8vj9wBUZdVp04JidGhIslFSLY8LgRQT3oAa2ZibEnpgQWQR9/pB+PLWQ5Ki8u47QT/4Y0yYo0IZmqWz90eVWQZI2K/TFgeHF0XmXD4bkwVpB7xqWrvTp0u4jC0lr5gKJ6bhkE4cDw6I/NqfaXS8p9kQ0k7H1ynkCxR3OLQMsKd4Tk0LSyhMI8ZllrNJ7S0Tm6t9phs5RZfyhDrwRARSy9M6oxOaE+YIoO7KNAYhjNGqu6E6cyDZiKzDUk+RIedDt5S1xB2rxLGq7MBzeEbTpKw49ZBQ9LxiEnfRaxkOUc2o5O9wpxhlyeGQ== user2
-    zones: 
-      - swarm_managers
-    groups: 
-      - docker
+    zones:
+      swarm_gw:
+      swarm_managers:
+        groups:
+          - docker

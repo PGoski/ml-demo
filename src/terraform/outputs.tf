@@ -13,9 +13,3 @@ output "swarm_gw_ip" {
 output "floating_ip" {
   value = digitalocean_floating_ip.swarm_gw.ip_address
 }
-
-/*
-output "swarm_loadbalancer_ip" {
-  value = digitalocean_loadbalancer.public.ip
-}
-*/

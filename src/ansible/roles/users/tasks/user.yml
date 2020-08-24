@@ -3,9 +3,15 @@
   user:
     name: '{{ item.username }}'
     comment: '{{ item.comment }}'
-    groups: '{{ item.groups }}'
-    append: yes
+    shell: /bin/bash
     state: present
+
+- name: 'Add user {{ item.username }} to defined groups'
+  user:
+    name: '{{ item.username }}'
+    groups: '{{ item.zones[(item.zones.keys()|list | intersect(group_names))[0]].groups }}'
+    append: yes
+  when: 'item.zones[(item.zones.keys()|list | intersect(group_names))[0]].groups is defined'
 
 - name: 'Authorize public key for: {{ item.username }}'
   authorized_key:

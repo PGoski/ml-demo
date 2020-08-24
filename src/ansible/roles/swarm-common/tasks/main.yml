@@ -1,14 +1,6 @@
 ---
-- name: Install python-pip
-  apt:
-    name: python-pip
-    update_cache: yes
+- name: Install Swarm common packages
+  include: packages.yml
 
-- name: Docker-py
-  pip: 
-    name: docker-py
-
-- name: Allow 2377
-  ufw:
-    rule: allow
-    port: '2377'
+- name: Configure networking on all Swarm nodes
+  include: network.yml
