@@ -1,0 +1,12 @@
+---
+- name: Install necessary packages
+  include: packages.yml
+
+- name: Configure network
+  include: network.yml
+
+- name: Create configuration files and scripts
+  include: config.yml
+
+- name: Configure services
+  include: services.yml

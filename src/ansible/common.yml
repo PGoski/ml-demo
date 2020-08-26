@@ -1,7 +1,0 @@
----
-# This is a playbook for installing common software etc
-- hosts: all
-  become: true
-  roles:
-   - {role: update, tags: ['update', 'never']}
-   - {role: common-packages, tags: ['common-packages']}

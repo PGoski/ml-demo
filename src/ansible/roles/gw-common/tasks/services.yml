@@ -1,0 +1,13 @@
+---
+- name: Start and enable keepalived service
+  systemd:
+    state: started
+    enabled: yes
+    name: keepalived
+
+- name: Start and enable haproxy service
+  systemd:
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+    name: haproxy

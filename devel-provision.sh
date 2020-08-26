@@ -19,6 +19,7 @@ terraform -install-autocomplete
 
 # Install Ansible
 yum install -y ansible
+ansible-galaxy install kwoodson.yedit
 
 # Clean cache
 yum clean all

@@ -1,0 +1,17 @@
+---
+- name: Make sure the opt directory exists
+  file:
+    path: /opt
+    state: directory
+
+- name: Template and copy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/docker-compose.yml
+
+- name: Deploy stack from a compose file
+  docker_stack:
+    state: present
+    name: cassandra
+    compose:
+      - /opt/docker-compose.yml

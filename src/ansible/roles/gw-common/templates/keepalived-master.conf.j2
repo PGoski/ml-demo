@@ -1,0 +1,24 @@
+global_defs {
+	script_user manager
+	enable_script_security
+}
+
+vrrp_instance haproxy {
+	interface eth0
+	state MASTER
+	virtual_router_id 50
+	priority 101
+	advert_int 1
+
+	authentication {
+		auth_type AH
+		auth_pass {{ keepalived_auth_pass }}
+	}
+
+	unicast_src_ip {{ groups['swarm_gw'][0] }}
+ 	unicast_peer {
+ 		{{ groups['swarm_gw'][1] }}
+ 	}
+
+ 	notify_master /etc/keepalived/master.sh
+}

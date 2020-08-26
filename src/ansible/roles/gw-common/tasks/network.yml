@@ -1,0 +1,53 @@
+---
+# The firewall is temporarily disabled. Developing a working solution.
+#- name: Enable ufw
+#  ufw:
+#    logging: 'on'
+#    state: enabled
+
+- name: Enable rate limit on ssh connections
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Enable traffic between nodes
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+  with_inventory_hostnames: swarm_gw
+  when: item != ansible_eth0.ipv4.address
+  
+- name: Enable 9042
+  ufw:
+    rule: allow
+    port: '9042'
+    proto: tcp
+
+- name: Enable 7199
+  ufw:
+    rule: allow
+    port: '7199'
+    proto: tcp
+
+- name: Allow all access from private networks to this host
+  ufw:
+    rule: allow
+    src: 10.10.10.0/24
+
+- name: Enable ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Configure iptables for NAT routing
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    action: append
+    source: 10.10.10.0/24
+    out_interface: eth0
+    jump: MASQUERADE

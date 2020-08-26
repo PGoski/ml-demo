@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  roles:
+   - {role: all-update, tags: ['all-update', 'never']}
+   - {role: all-common-packages, tags: ['all-common-packages']}

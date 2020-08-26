@@ -2,3 +2,27 @@
 - name: Disable firewall inside internal network
   ufw:
     state: disabled
+
+# https://www.digitalocean.com/docs/networking/vpc/resources/droplet-as-gateway/
+- name: Add routes to netplan configuration
+  yedit:
+    update: no
+    src: /etc/netplan/50-cloud-init.yaml
+    key: network.ethernets.eth1.routes
+    value:
+      - to: 0.0.0.0/0
+        via: "{{ swarm_gw1_private_ip }}"
+        metric: 100
+      - to: 0.0.0.0/0
+        via: "{{ swarm_gw2_private_ip }}"
+        metric: 100
+
+- name: Remove eth0 gateway
+  yedit:
+    state: absent
+    update: no
+    src: /etc/netplan/50-cloud-init.yaml
+    key: network.ethernets.eth0.gateway4
+
+- name: Apply netplan rules
+  shell: netplan apply

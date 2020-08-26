@@ -4,10 +4,6 @@
     advertise_addr: '{{ ansible_eth1.ipv4.address }}'
     state: present
 
-#- name: Get info about Swarm manager node
-#  include_role: 
-#    name: swarm-get-info
-
 - name: Get info on docker host
   docker_host_info:
   register: host_result

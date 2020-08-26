@@ -1,10 +1,12 @@
 ---
-- name: Temporary - chmod mount
+- name: Get Cassandra data mounts names
+  shell: ls /mnt/
+  register: mount_name
+
+- name: Add permissions for data mount
   file:
-    path: "{{ item }}"
-    mode: '777'
-  with_fileglob:
-    - "/mnt/cassandra_data*"
+    path : /mnt/{{ mount_name.stdout }}
+    mode: '0777'
 
 - name: Check cluster membership
   shell: docker info --format '{% raw %}{{ .Swarm.LocalNodeState }}{% endraw %}'

@@ -1,0 +1,16 @@
+---
+- name: Install apt packages
+  apt:
+    name:
+      - iptables
+      - iptables-persistent
+      - keepalived
+      - haproxy
+      - fail2ban
+    update_cache: yes
+    state: present
+
+- name: Install pip packages
+  pip:
+    name: requests
+    state: present

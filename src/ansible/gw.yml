@@ -1,0 +1,5 @@
+---
+- hosts: swarm_gw
+  become: true
+  roles:
+    - {role: gw-common, tags: ['gw-common']}

@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - {role: all-users, tags: ['all-users']}
+    - {role: all-init, tags: ['all-init']}

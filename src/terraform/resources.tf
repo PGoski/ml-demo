@@ -4,7 +4,7 @@ resource "digitalocean_ssh_key" "default" {
 }
 
 resource "digitalocean_vpc" "example" {
-  name     = "example-project-network"
+  name     = "swarm-cassandra-network"
   region   = "fra1"
   ip_range = "10.10.10.0/24"
 }
@@ -42,8 +42,8 @@ resource "digitalocean_volume" "cassandra_data" {
 
 resource "digitalocean_volume_attachment" "cassandra_data_attachment" {
   count      = var.swarm_workers_count
-  droplet_id = digitalocean_droplet.swarm_worker[count.index + 1].id
-  volume_id  = digitalocean_volume.cassandra_data[count.index + 1].id
+  droplet_id = digitalocean_droplet.swarm_worker[count.index].id
+  volume_id  = digitalocean_volume.cassandra_data[count.index].id
 }
 
 resource "digitalocean_droplet" "swarm_gw" {

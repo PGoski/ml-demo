@@ -2,4 +2,4 @@
 - hosts: swarm_managers
   become: true
   roles:
-    - {role: cassandra, tags: ['cassandra'], run_once: true}
+    - {role: cassandra-init, tags: ['cassandra-init'], run_once: true}

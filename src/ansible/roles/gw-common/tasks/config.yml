@@ -1,0 +1,43 @@
+---
+- name: Template and copy keepalived master nodes configuration
+  template:
+    src: keepalived-master.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: swarm_gw1_private_ip == ansible_eth1.ipv4.address
+
+- name: Template and copy keepalived slave nodes configuration
+  template:
+    src: keepalived-slave.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: swarm_gw2_private_ip == ansible_eth1.ipv4.address
+
+- name: Template and copy keepalived master.sh script
+  template:
+    src: master.sh.j2
+    dest: /etc/keepalived/master.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy keepalived assign-ip.py script
+  copy:
+    src: assign-ip.py
+    dest: /usr/local/bin/assign-ip
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Template and copy haproxy configuration
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  
