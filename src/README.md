@@ -2,6 +2,20 @@
 
 This is a set of Terraform configuration files and Ansible playbooks for deploying a Swarm cluster with Cassandra to DigitalOceans cloud.
 
+## Cluster architecture
+
+Setup has 2 active/passive gateways (keepalived) for isolated VPC network. Those hosts used as:
+- Active/Passive Gateways (NAT router) for everyone inside VPC;
+- Load Balancers for incoming Cassandra traffic (Haproxy)
+- Secured management SSH hoppers
+
+There is a single static DigitalOcean Floating IP pointing to the primary GW. The second GW is used as a backup and can be utilized during maintenances. Both gateways are used for outgoing connections from the cluster (each node has 2 gateways configured).
+
+This simple setup hopefully will allow us to not have to deal with ingress controllers or external Load Balancers with lots of port forwardings.
+
+![Swarm](../.github/images/swarm_arch1.png)
+
+
 ## How to deploy
 
 First, init, plan and apply Terraform configuration:
