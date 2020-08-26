@@ -87,4 +87,5 @@ test/vagrant-spec/boxes/*.box
 
 # User defined rules
 src/ansible/group_vars
+src/ansible/group_vars/all.yml
 src/ansible/inventory
