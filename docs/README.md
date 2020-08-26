@@ -1,6 +1,6 @@
 ## Introduction
 
-This is a set of Terraform configuration files and Ansible playbooks for deploying a Swarm cluster with Cassandra to DigitalOceans cloud.
+This is a set of Terraform configuration files and Ansible playbooks for deploying a Swarm cluster with Cassandra to DigitalOcean cloud.
 
 ## Cluster architecture
 
