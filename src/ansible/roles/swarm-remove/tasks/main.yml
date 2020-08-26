@@ -1,5 +1,0 @@
----
-- name: Remove node from the cluster
-  docker_swarm:
-    state: absent
-    force: true
