@@ -16,3 +16,19 @@ vagrant ssh
 sudo -i
 cd /devel
 ~~~
+
+## Requirements:
+- Qemu-KVM, Libvirt
+- Vagrant >= 2.2.5
+- vagrant-libvirt plugin
+- Ansible >= 2
+- Python >= 3
+
+Tested on setup:
+- Ubintu 20.04 LTS (Focal Fossa)
+- QEMU-KVM 4.2.0 (Debian 1:4.2-3ubuntu6.2), libvirtd (libvirt) 6.0.0
+- Vagrant 2.2.9, vagrant-libvirt (0.1.2, global)
+- Ansible 2.9.6, Python 3.8.2
+
+## PS:
+Ansible group_vars directory, inventory and some othes configuration files containing sensitive information are excluded (see the end of .gitignore).
