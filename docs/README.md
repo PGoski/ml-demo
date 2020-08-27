@@ -52,3 +52,7 @@ ansible-playbook cassandra.yml  # Deploys Cassandra cluster on the created Swarm
 * Improve security of gateways and Cassandra endpoints
 
 * Secure all secrets. Some password-manager implementation would be great to have!
+
+* Cassandra backup & restore automation.
+
+* UI for Swarm. Swarmpit should be a great option.
