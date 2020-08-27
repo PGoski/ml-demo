@@ -6,7 +6,7 @@ This is a set of Terraform configuration files and Ansible playbooks for deployi
 
 Setup has 2 active/passive gateways (keepalived) for isolated VPC network. Those hosts used as:
 - Active/Passive Gateways (NAT router) for everyone inside VPC;
-- Load Balancers for incoming Cassandra traffic (Haproxy)
+- Load Balancers for incoming Cassandra traffic (HAProxy)
 - Secured management SSH hoppers
 
 There is a single static DigitalOcean Floating IP pointing to the primary GW. The second GW is used as a backup and can be utilized during maintenances. Both gateways are used for outgoing connections from the cluster (each node has 2 gateways configured).
@@ -45,9 +45,9 @@ ansible-playbook cassandra.yml  # Deploys Cassandra cluster on the created Swarm
 * Currently the upscaling of the cluster works great but we should do downscaling, too!
 
 * Terraform and Ansible files should be in a separate (private) repos. That will allow us to create a pretty nifty CI/CD pipeline. One example would be:
-  - After Haproxy+Swarm monitoring will see a greater increase of load, where existing nodes can't keep up, it can push refreshed Terraform config to master (i.e increased cluster size)
+  - After HAProxy+Swarm monitoring will see a greater increase of load, where existing nodes can't keep up, it can push refreshed Terraform config to master (i.e increased cluster size)
   - This will trigger a Terraform action (test & deploy).
-  - Successful Terraform deploy will trigger an Ansible action, which will add Swarm workers to a cluster and deploy additional Cassandra nodes.
+  - Successful Terraform deploy will trigger an Ansible action, which will add Swarm workers to a cluster, deploy additional Cassandra nodes and add them to the GW HAProxy configuration.
 
 * Improve security of gateways and Cassandra endpoints
 
